@@ -22,11 +22,13 @@ public class UserService {
             throw new IllegalArgumentException("Invalid email format");
         }
         if (!ValidatorUtils.isValidPhoneNumber(userRegistrationDTO.getPhoneNumber())) {
-            throw new IllegalArgumentException("Invalid phone number format, must be 11 digits");
+            throw new IllegalArgumentException("Invalid phone number format, Must start with Nigerian country code (e.g., +234) followed by 10 digits)");
         }
         if (userRepository.existsByEmail(userRegistrationDTO.getEmail())) {
             throw new IllegalArgumentException("Email already exists");
         }
+        String normalizedPhoneNumber = userRegistrationDTO.getPhoneNumber().substring(1);
+        userRegistrationDTO.setPhoneNumber(normalizedPhoneNumber);
         userRepository.save(UserRegistrationMapper.toUser(userRegistrationDTO));
     }
 }

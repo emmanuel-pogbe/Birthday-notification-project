@@ -6,7 +6,18 @@ public class ValidatorUtils {
     }
 
     public static boolean isValidPhoneNumber(String phoneNumber) {
-        return isNumeric(phoneNumber) && phoneNumber.length() == 11;
+        if (phoneNumber == null) {
+            return false;
+        }
+
+        if (!phoneNumber.startsWith("+234")) {
+            return false;
+        }
+
+        if (phoneNumber.length() != 14) {
+            return false;
+        }
+        return isNumeric(phoneNumber.substring(1));
     }
 
     public static boolean isNumeric(String str) {

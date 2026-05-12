@@ -2,6 +2,8 @@ package com.pogbe.birthdaynotificationproject.services;
 
 import com.pogbe.birthdaynotificationproject.models.User;
 import com.pogbe.birthdaynotificationproject.repository.UserRepository;
+import com.pogbe.birthdaynotificationproject.services.impl.SmsBirthdayNotificationServiceImpl;
+import com.pogbe.birthdaynotificationproject.services.interfaces.BirthdayNotificationService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -15,8 +17,10 @@ import java.util.List;
 @Service
 public class BirthdayNotificationCron {
     private final UserRepository userRepository;
+    private final BirthdayNotificationService birthdayNotificationService;
 
-    public BirthdayNotificationCron(UserRepository userRepository) {
+    public BirthdayNotificationCron(UserRepository userRepository, BirthdayNotificationService birthdayNotificationService) {
+        this.birthdayNotificationService = birthdayNotificationService;
         this.userRepository = userRepository;
     }
 
@@ -42,6 +46,7 @@ public class BirthdayNotificationCron {
 
                 System.out.println("Sending message to " + phoneNumber);
                 System.out.println(message);
+                birthdayNotificationService.sendNotification(phoneNumber, message);
                 userIdsNotified.add(user.getId());
             }
 
