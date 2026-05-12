@@ -25,7 +25,7 @@ public class BirthdayNotificationCron {
     }
 
 //    @Scheduled(fixedDelay = 43200000) // so should run every 12 hours after a run
-    @Scheduled(fixedDelay = 10*1000) // this is every 10 seconds for testing
+    @Scheduled(fixedDelay = 60*1000) // this is every 60 seconds for testing
     @Transactional
     public void notifyUsersOnTheirBirthday() {
         try {
@@ -42,7 +42,7 @@ public class BirthdayNotificationCron {
                 String fullName = user.getFullName();
                 int currentYear = LocalDate.now().getYear();
                 int usersAge = currentYear - user.getDateOfBirth().getYear();
-                String message = "Happy Birthday " + fullName + "!\nYou are now "+usersAge+" years old";
+                String message = "Happy Birthday " + fullName + "!\nYou are now "+usersAge+" years old\nEnjoy your day!";
 
                 System.out.println("Sending message to " + phoneNumber);
                 System.out.println(message);
