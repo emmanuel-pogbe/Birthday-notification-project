@@ -6,6 +6,16 @@ public class ValidatorUtils {
     }
 
     public static boolean isValidPhoneNumber(String phoneNumber) {
-        return phoneNumber.matches("^[0-9]{10}$");
+        return isNumeric(phoneNumber) && phoneNumber.length() == 11;
+    }
+
+    public static boolean isNumeric(String str) {
+        if (str == null || str.isEmpty()) return false;
+        for (char c : str.toCharArray()) {
+            if (!Character.isDigit(c)) {
+                return false;
+            }
+        }
+        return true;
     }
 }

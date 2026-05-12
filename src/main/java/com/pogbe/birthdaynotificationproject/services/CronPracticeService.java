@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CronPracticeService {
-    @Scheduled(cron = "*/5 * * * * *")
+//    @Scheduled(cron = "*/5 * * * * *")
     public void printMessage() {
         System.out.println("Cron job is running...");
     }

@@ -22,7 +22,7 @@ public class UserService {
             throw new IllegalArgumentException("Invalid email format");
         }
         if (!ValidatorUtils.isValidPhoneNumber(userRegistrationDTO.getPhoneNumber())) {
-            throw new IllegalArgumentException("Invalid phone number format");
+            throw new IllegalArgumentException("Invalid phone number format, must be 11 digits");
         }
         if (userRepository.existsByEmail(userRegistrationDTO.getEmail())) {
             throw new IllegalArgumentException("Email already exists");
