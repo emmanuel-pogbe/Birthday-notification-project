@@ -19,21 +19,24 @@ public class BirthdayNotificationCron {
         this.userRepository = userRepository;
     }
 
-    @Scheduled(fixedDelay = 86400000) // so should ideally run everyday
+    @Scheduled(fixedDelay = 43200000) // so should run every 12 hours after a run
     public void notifyUsersOnTheirBirthday() {
         try {
             List<Long> userIdsNotified = new ArrayList<>();
-            LocalDate today = LocalDate.now();
-            List<User> birthdayUsers = userRepository.findAllByDateOfBirthAndEligibleForNotification(today, today.getYear()+"" );
+            List<User> birthdayUsers = userRepository.findAllByDateOfBirthAndEligibleForNotification();
             // query users whose birthday is today
             // some logic for notifying those users
             for (User user : birthdayUsers) {
                 String phoneNumber = user.getPhoneNumber();
-                // notify the user using SMS -> Yet to implement
+                String fullName = user.getFullName();
+                String message = "Happy Birthday " + fullName + "!\nYou are now " + " years old";
+
+                System.out.println("Sending message to " + phoneNumber);
+                System.out.println(message);
                 userIdsNotified.add(user.getId());
             }
 
-            userRepository.updateYearNotified(userIdsNotified, today.getYear()+"");
+            userRepository.updateYearNotified(userIdsNotified);
             // when all the users have been notified, gather all IDs and set all their yearsNotified to Year.now
         } catch (Exception e) {
             log.error("Error notifying users on their birthday: {}", e.getMessage());
